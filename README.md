@@ -8,7 +8,11 @@ TABC云实验平台安卓sdk
 ### 在dependencies中添加依赖：
 
 ```
-implementation(group: 'com.tencent.mtt', name: 'tabcsdk-release', version: '1.1.0', ext: 'aar')
+    // 网络库
+    implementation("com.squareup.okhttp3:okhttp:4.9.1")
+
+    // ABTest SDK
+    implementation files('libs/tabcsdk-release-1.0.0.aar')
 ```
 ### 初始化SDK:
 
