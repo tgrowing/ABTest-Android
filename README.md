@@ -5,9 +5,7 @@ TABC云实验平台安卓sdk
 
 ## SDK集成
 
-### 导入SDK
-
-在dependencies中添加依赖：
+### 在dependencies中添加依赖：
 
 ```
 implementation(group: 'com.tencent.mtt', name: 'tabcsdk-release', version: '1.1.0', ext: 'aar')
@@ -34,7 +32,7 @@ implementation(group: 'com.tencent.mtt', name: 'tabcsdk-release', version: '1.1.
 
 ```Android
     ABTestConfig abTestConfig = new ABTestConfig();
-    abTestConfig.setGuid("123456789"); // 用于分流的用户身份id
+    abTestConfig.setGuid("123456789"); // 用户唯一身份id，用于分流
 
     // 用户属性标签，做标签实验使用。可选
     Map<String,String> profiles = new HashMap<String,String>();
@@ -44,16 +42,6 @@ implementation(group: 'com.tencent.mtt', name: 'tabcsdk-release', version: '1.1.
     // 初始化SDK
     ABTestApi.init(this, abTestConfig);
 ```
-
-（4）终端主动拉取后台实验的时机当前有四个地方：
-    
-    sdk初始化时
-    
-    每一个activity页面创建(onCreate)和销毁(onDestroy)时
-    
-    调用同步拉取策略接口的时候
-    
-    定时更新使用策略触发
 
 ## SDK使用
 
