@@ -5,6 +5,9 @@ TABC云实验平台安卓sdk
 
 ## SDK集成
 
+### 支持版本：
+Android Api>=19
+
 ### 在dependencies中添加依赖：
 
 ```
