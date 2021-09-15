@@ -6,8 +6,11 @@ TABC云实验平台安卓sdk
 ## SDK集成
 
 ### 导入SDK
+
+在dependencies中添加依赖：
+
 ```
-在dependencies中添加依赖：implementation(group: 'com.tencent.mtt', name: 'tabcsdk-release', version: '1.1.0', ext: 'aar')
+implementation(group: 'com.tencent.mtt', name: 'tabcsdk-release', version: '1.1.0', ext: 'aar')
 ```
 ### 初始化SDK:
 
