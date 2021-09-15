@@ -6,9 +6,9 @@ TABC云实验平台安卓sdk
 ## SDK集成
 
 ### 导入SDK
-
+```
 在dependencies中添加依赖：implementation(group: 'com.tencent.mtt', name: 'tabcsdk-release', version: '1.1.0', ext: 'aar')
-
+```
 ### 初始化SDK:
 
 （1）在应用的Manifest文件中引入在骡马实验后台创建实验时生成的appkey。同时记得要在清单中增加网络访问和存储读写权限。
@@ -43,9 +43,13 @@ TABC云实验平台安卓sdk
 ```
 
 （4）终端主动拉取后台实验的时机当前有四个地方：
+    
     sdk初始化时
+    
     每一个activity页面创建(onCreate)和销毁(onDestroy)时
+    
     调用同步拉取策略接口的时候
+    
     定时更新使用策略触发
 
 ## SDK使用
