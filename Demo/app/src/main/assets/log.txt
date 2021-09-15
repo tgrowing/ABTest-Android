@@ -1,0 +1,12 @@
+06-25 16:14:10.088 13085-13085/? D/hjc:  cost time: 2 ,view name: android.widget.LinearLayout{7393962 V.E...... ......ID 0,0-1440,2392}
+06-25 16:14:10.152 13085-13085/? D/hjc:  cost time: 1 ,view name: android.view.View{7b047e5 V.ED..... ........ 0,0-1440,84 #7f0f0c0d app:id/view_global_search_status_bar_bg}
+06-25 16:14:10.153 13085-13085/? D/hjc:  cost time: 1 ,view name: android.widget.RelativeLayout{f53556b V.E...... ........ 0,126-1440,249 #7f0f0c0e app:id/search_input_container}
+06-25 16:14:10.155 13085-13085/? D/hjc:  cost time: 1 ,view name: android.widget.FrameLayout{2227d61 V.E...... ........ 0,249-1440,2392}
+06-25 16:14:10.203 13085-13085/? D/hjc:  cost time: 2 ,view name: android.widget.LinearLayout{81548e0 V.E...... ........ 56,0-1222,123}
+06-25 16:14:10.205 13085-13085/? D/hjc:  cost time: 2 ,view name: android.support.v7.widget.AppCompatTextView{2dba5e V.ED..C.. ........ 1278,0-1384,123 #7f0f0c0f app:id/search_cancel}
+06-25 16:14:10.209 13085-13085/? D/hjc:  cost time: 4 ,view name: com.tencent.oscar.base.easyrecyclerview.EasyRecyclerView{436130c V.E...... ........ 0,14-1440,2143 #7f0f0c12 app:id/search_history_and_hot}
+06-25 16:14:10.284 13085-13085/? D/hjc:  cost time: 2 ,view name: android.support.v7.widget.AppCompatImageView{27480d1 V.ED..... ........ 32,26-102,96}
+06-25 16:14:10.285 13085-13085/? D/hjc:  cost time: 1 ,view name: android.support.v7.widget.AppCompatEditText{164a637 VFED..CL. .F...... 116,0-1032,123 #7f0f0c10 app:id/search_input}
+06-25 16:14:10.286 13085-13085/? D/hjc:  cost time: 1 ,view name: com.tencent.oscar.base.easyrecyclerview.swipe.SwipeRefreshLayout{61910c2 V..D..... ........ 0,0-1440,2129 #7f0f0b7f app:id/ptr_layout}
+06-25 16:14:10.298 13085-13085/? D/hjc:  cost time: 1 ,view name: android.widget.RelativeLayout{dc57909 V.E...... ........ 0,0-1440,2129}
+06-25 16:14:10.302 13085-13085/? D/hjc:  cost time: 1 ,view name: android.support.v7.widget.RecyclerView{1ea573c VFED..C.. ........ 0,0-1440,2129 #102000a android:id/list}

@@ -1,9 +1,6 @@
 package com.tencent.mtt.tabcandroidsdk;
 
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.tencent.mtt.tabcsdk.ABTestApi;
 import com.tencent.mtt.tabcsdk.BuildConfig;
@@ -33,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
 
     private GetExperimentListener mGetListener, mPoseListener, mExpPosedListener;
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

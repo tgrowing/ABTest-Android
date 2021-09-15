@@ -1,14 +1,16 @@
 package com.tencent.mtt.tabcandroidsdk;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.tencent.mtt.tabcsdk.ABTestApi;
 import com.tencent.mtt.tabcsdk.entity.ExpEntity;
 import com.tencent.mtt.tabcsdk.listener.GetExperimentListener;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
