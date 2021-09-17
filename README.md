@@ -8,14 +8,22 @@ TABC云实验平台安卓sdk
 ### 支持版本：
 Android Api>=19
 
-### 在dependencies中添加依赖：
+### 在工程的build.gradle的repositories中添加maven：
+
+```
+    maven {
+        url "https://mirrors.tencent.com/nexus/repository/maven-public"
+    }
+```
+
+### 在应用的build.gradle的dependencies中添加依赖：
 
 ```
     // 网络库
     implementation("com.squareup.okhttp3:okhttp:4.9.1")
 
     // ABTest SDK
-    implementation files('libs/tabcsdk-release-1.0.0.aar')
+    implementation("com.tencent.yunxiaowei.abtest:tabcsdk:1.0.0")
 ```
 ### 初始化SDK:
 
