@@ -35,7 +35,7 @@ Android Api>=19
     abTestConfig.setEnv(ABTestConfig.ENV_RELEASE);
 ```
 
-（3）求在应用的application的onCreate回调方法中进行初始化，实验配置参数可以设置guid、环境（debug测试、release）和标签等属性。
+（3）在应用的application的onCreate回调方法中进行初始化，实验配置参数可以设置guid、环境（debug测试、release）和标签等属性。
 
 ```Android
     ABTestConfig abTestConfig = new ABTestConfig();
