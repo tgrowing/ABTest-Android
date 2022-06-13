@@ -1,20 +1,9 @@
-tabc_android_sdk
----------------
+# ABTest-android
 
-TABC云实验平台安卓sdk
-
-## SDK集成
-
-### 支持版本：
+## 支持版本：
 Android Api>=19
 
-### 在工程的build.gradle的repositories中添加maven：
-
-```
-    maven {
-        url "https://mirrors.tencent.com/nexus/repository/maven-public"
-    }
-```
+## SDK集成
 
 ### 在应用的build.gradle的dependencies中添加依赖：
 
@@ -22,17 +11,22 @@ Android Api>=19
     // 网络库
     implementation("com.squareup.okhttp3:okhttp:4.9.1")
 
-    // ABTest SDK
-    implementation("com.tencent.yunxiaowei.abtest:tabcsdk:1.0.0")
+    // ABTest SDK 离线化版本
+    implementation files('tabcsdk-release-【SDK对应的版本号】.aar')
 ```
 ### 初始化SDK:
 
-（1）在应用的Manifest文件中引入在骡马实验后台创建实验时生成的appkey。同时记得要在清单中增加网络访问和存储读写权限。
+（1）在应用的Manifest文件中引入在腾讯云AB实验平台创建实验时生成的appkey。同时记得要在清单中增加网络访问和存储读写权限。
 
 ```Android
   <meta-data
             android:name="TabcSDK_appKey"
             android:value="申请的appkey" />
+			
+  // 开启网络、存储读写权限
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 ```
 
 （2）也可以使用代码初始化appkey
@@ -40,107 +34,93 @@ Android Api>=19
 ```Android
     ABTestConfig abTestConfig = new ABTestConfig();
     abTestConfig.setAppKey("申请的appkey");
-    abTestConfig.setEnv(ABTestConfig.ENV_RELEASE);
 ```
 
-（3）在应用的application的onCreate回调方法中进行初始化，实验配置参数可以设置guid、环境（debug测试、release）和标签等属性。
+（3）在应用的application的onCreate回调方法中进行初始化，实验配置参数可以设置userId、环境（debug测试、release）等属性。
 
 ```Android
     ABTestConfig abTestConfig = new ABTestConfig();
-    abTestConfig.setGuid("123456789"); // 用户唯一身份id，用于分流
+    abTestConfig.setUserId("123456789"); // 用户唯一身份id，用于分流
+```
+（4）初始化SDK
 
-    // 用户属性标签，做标签实验使用。可选
-    Map<String,String> profiles = new HashMap<String,String>();
-    profiles.put("sexy", "male");
-    abTestConfig.setCustomProfiles(profiles);
-
-    // 初始化SDK
+```Android
     ABTestApi.init(this, abTestConfig);
 ```
 
+注：
+    1. 查询appkey
+	![image.png#634px #227px](https://tencent-growth-platform-1251316161.cos.ap-beijing.myqcloud.com/sdk/images/abtest_sdk/abtest_ios_step_1.png)
+
 ## SDK使用
 
-### 在TAB实验平台配置实验
+### 在腾讯云AB实验平台配置实验
 
-### 从本地缓存的策略中获取实验
+### 获取实验数据
 
-```Android
-    // 通过实验组key获取实验，该API调用会上报一次实验曝光
-    ExpEntity exp = ABTestApi.getExpByName("group2");
-    if ("treatment".equals(exp.assignment)) {
-        // 实验版本treatment的逻辑
-    } else if ("control".equals(exp.assignment)) {
-        // 实验版本control的逻辑
-    } else {
-        // 默认逻辑
-    }
-```
-
-### 同步发起一次后台实验策略请求
+1. 通过实验标识获取实验数据，并上报一次实验曝光
 
 ```Android
-    int timeout = 2; // 请求超时时间为2s
-    // 通过实验组key获取实验，该API调用会在后台产生一次实验曝光
-    ABTestApi.asyncGetExpByName("group2", new AsyncGetExperimentListener() {
+    // 该调用会首先从缓存中获取实验，没有缓存的话则发起一次异步的调用，并在拿到结果后回调
+    ABTestApi.getExpByNameWithExpose("具体的实验id",mGetListener);
+    mGetListener = new GetExperimentListener() {
         @Override
-        public void getExperimentSucceed(ExpEntity experiment) {
-            // 从网络加载到策略，也有可能超时使用本地策略
-            if ("treatment".equals(exp.assignment)) {
-                // 实验版本treatment的逻辑
-            } else if ("control".equals(exp.assignment)) {
-                // 实验版本control的逻辑
-            } else {
-                // 默认逻辑
+        public void getExperimentSucceed(List<ExpEntity> romaExpEntities) {
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < romaExpEntities.size(); i++) {
+                ExpEntity entity = romaExpEntities.get(i);
+                if ("具体的实验版本".equals(entity.assignment)) {
+                    // 实现实验版本A的逻辑
+                } else if ("具体的实验版本2".equals(entity.assignment)) {
+                    // 实验实验对照版本的逻辑
+                } else {
+                    // 默认逻辑
+                }
             }
         }
-
-        @Override
-        public void getExperimentFailed(int errorCode, String errMsg) {
-            // sdk集成有问题，使用默认的逻辑
-            // 正常初始化不会走到这里
-
-            // 默认逻辑
-        }
-    }, timeout);
+    };
 ```
 
-### 从本地缓存的策略中获取实验，但不产生实验曝光
+2. 通过实验标识获取实验数据，不会上报实验曝光
 
 ```Android
-    // 通过实验组key获取实验，不会上报实验曝光
-    ExpEntity exp = ABTestApi.peekExpByName("group2");
+    // 该调用会首先从缓存中获取实验，没有缓存的话则发起一次异步的调用，并在拿到结果后回调
+    ExpEntity exp = ABTestApi.getExpByName("具体的实验id", mGetListener);
+    mGetListener = new GetExperimentListener() {
+        @Override
+        public void getExperimentSucceed(List<ExpEntity> romaExpEntities) {
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < romaExpEntities.size(); i++) {
+                ExpEntity entity = romaExpEntities.get(i);
+                if ("具体的实验版本".equals(entity.assignment)) {
+                    // 实现实验版本A的逻辑
+                } else if ("具体的实验版本2".equals(entity.assignment)) {
+                    // 实验实验对照版本的逻辑
+                } else {
+                    // 默认逻辑
+                }
+            }
+        }
+    };
 ```
-
+注：
+    1. 查询实验id
+![image.png#600px #157px](https://tencent-growth-platform-1251316161.cos.ap-beijing.myqcloud.com/sdk/images/abtest_sdk/abtest_ios_step_2.png)
+    2. 查询实验版本
+![image.png#600px #285px](https://tencent-growth-platform-1251316161.cos.ap-beijing.myqcloud.com/sdk/images/abtest_sdk/abtest_ios_step_3.png)
 ### 上报实验相关事件
 
+1. 上报实验曝光
 ```Android
-    // 上报一条实验曝光
-    ABTestApi.reportExpExpose(exp);
-    // 上报一条实验关联事件，someAction为在实验平台申请的事件
-    ABTestApi.reportExpEventCode("someAction", ExpEntity expEntity)
+    ABTestApi.reportExpExpose(ExpEntity expEntity);
 ```
 
-### 其他API
-
+2. 上报实验反馈事件
 ```Android
-    // 获取所有命中的实验，key为分层code，value是RomaExp
-    Map<String, RomaExp> expMap = ABTestApi.getAllExps();
-
-    // 该接口直接获取后台返回的完整json对象
-    JSONObject obj = ABTestApi.getHitExperiment();
-    // 该接口通过传入实验id参数返回对应的实验层名称和实验参数值
-    JSONObject expObj = ABTestApi.getHitExperiment(grayId);
-
-    // 该接口以列表形式返回命中的所有实验id
-    List<String> grayIds = ABTestApi.getExperimentCodes();
-
-    // 该接口通过传入实验id判断是否第一次命中某个实验
-    boolean isFirstHit = ABTestApi.isFirstHit(grayId);
-
-    // 通过实验的参数，获取实验的参数值
-    Object ret = ABTestApi.getParamsValue(grayId, paramKey, defaultValue);
-
+    ABTestApi.reportExpEventCode("具体的实验事件code", ExpEntity expEntity)
 ```
 
-### License
-ISC
+注：
+1.  查询实验事件code：
+![image.png#600px #179px](https://tencent-growth-platform-1251316161.cos.ap-beijing.myqcloud.com/sdk/images/abtest_sdk/abtest_ios_step_4.png)
+
